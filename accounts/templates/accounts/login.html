@@ -1,0 +1,27 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<section class="w-full flex justify-center items-center min-h-screen max-container">
+    <div class="flex max-lg:flex-col items-center lg:gap-72 gap-12">
+        <img src="{% static 'images/logo-almau.png' %}" alt="Almau-Logo" class="w-[min(70vw,600px)]">
+        <form method="post">
+            {% csrf_token %}
+            <div class="flex flex-col gap-4 ">
+                <!-- {{ form.as_p }} -->
+                <input type="text" name="username" placeholder="Email" class="input text-sm" required>
+                <input type="password" name="password" placeholder="Password" class="input text-sm" required>
+            </div>
+            <button type="submit" class="text-white w-[256px] h-[30px] rounded-md mt-2">Login</button> <br>
+            <p class="text-center"><a href="{% url 'register' %}" class="text-white">Sign Up</a></p>
+            <!-- <button class="text-white w-[256px] h-[30px] rounded-md mt-2">Зарегистрироваться</button> -->
+        </form>
+    </div>
+    
+</section>
+
+{% endblock %}
+

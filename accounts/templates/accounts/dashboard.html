@@ -1,0 +1,65 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+
+<!-- {% if request.user.is_authenticated %} -->
+    <section class="w-full flex flex-col items-center min-h-screen gap-10 max-container mt-4 ">
+        <h1 class="text-3xl text-white">Welcome, {{ request.user.username }}</h1>
+        <!-- <h2 class="text-2xl text-white">Welcome, {{ request.user.username }}</h2> -->
+        <h2 class="text-2xl text-white">Submission of documents online <br>
+            List of documents for admission
+        </h2>
+      
+        <form method="post" action="">
+            {% csrf_token %}
+        <!-- <div class="flex gap-20 text-slate-gray items-center max-md:flex-col justify-center">
+            <button class="bg-white w-[256px] h-[30px] rounded-md">Сохранить</button>
+            <div class="h-[173px] w-[134px] bg-slate-gray"></div>
+            <button class="bg-white w-[256px] h-[30px] rounded-md">Сменить фото</button>
+        </div> -->
+
+        <div class="flex items-center justify-center gap-20 max-md:flex-col my-8 ">
+            <div class="flex flex-col gap-4">
+                <label for="upload-document" class="text-white text-lg">Passport Scan</label>
+                <input type="file" name="document" id="upload-document" class="text-white" />
+                <label for="upload-photo" class="text-white text-lg">Upload 3x4 photo</label>
+                <input type="file" name="document" id="upload-photo" class="text-white" />
+                <label for="upload-certificate" class="text-white text-lg">Certificate of no criminal record</label>
+                <input type="file" name="document" id="upload-certificate" class="text-white" />
+                <label for="school-documents" class="text-white text-lg">Original documents from school / college</label>
+                <input type="file" name="document" id="school-documents" class="text-white" />
+                <button type="submit" class="self-center text-white w-[256px] h-[30px] rounded-md mt-2 bg-slate-600 hover:bg-slate-500">Save</button>
+            </div>
+
+            <!-- <div class="flex flex-col gap-4">
+                <label for="upload-086" class="text-white text-sm">Загрузить справку 086-У</label>
+                <input type="file" name="upload-086" id="upload-086" class="text-white" />
+                <input type="tel" placeholder="Введите ваш номер телефона" class="input text-sm">
+                <input type="text" placeholder="ФИО Родителя 1" class="input text-sm">
+                <input type="text" placeholder="ФИО Родителя 2" class="input text-sm">
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <label for="upload-ent" class="text-white text-sm">Сертификат ЕНТ</label>
+                <input type="file" name="upload-ent" id="upload-ent" class="text-white" />
+                <input type="tel" placeholder="Введите номер телефона Родителя 1" class="input text-sm">
+                <input type="tel" placeholder="Введите номер телефона Родителя 2" class="input text-sm">
+                <input type="text" placeholder="Справка о несудимости" class="input text-sm"> -->
+                <!-- <input type="text" placeholder="Аттестат или Диплом" class="input text-sm"> -->
+            <!-- </div>  -->
+        </div>
+    </form>
+    <!-- {% else %}
+    {% include 'accounts/conditions.html' %}
+    <div class="h-[600px] flex justify-center items-center gap-40 text-4xl">
+        <a href="{% url 'login' %}" class="text-white">Login</a>
+        <a href="{% url 'register' %}" class="text-white">Sign Up</a>
+    </div>
+    {% endif %} -->
+    </section>
+    
+{% endblock %}
+

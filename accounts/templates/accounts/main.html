@@ -1,0 +1,28 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CRM{% endblock %}</title>
+    {% tailwind_css %}
+</head>
+<!-- class="bg-gradient-to-b from-gradient-one to-gradient-two" -->
+<body class="bg-gradient-to-b from-gradient-one to-gradient-two"> 
+    <nav class="flex justify-around items-center max-md:flex-col p-4 max-md:gap-10 bg-primary md:h-36 text-white font-montserrat">
+        <h3 class="text-[min(2vw,50px)]">One University One Community</h3>
+
+        <div class="flex flex-col text-center gap-1">
+            <a href="tel:+7 727 313 30 90 (93)" class="hover:text-white-400">+7 727 313 30 90 (93)</a>
+            <a href="mailto:info@almau.edu.kz" class="hover:text-white-400">info@almau.edu.kz</a>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    {% include 'accounts/conditions.html' %}
+
+    {% include 'accounts/footer.html' %}
+</body>
+</html>

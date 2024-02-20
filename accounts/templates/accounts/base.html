@@ -1,0 +1,19 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CRM{% endblock %}</title>
+    {% tailwind_css %}
+</head>
+<!-- class="bg-gradient-to-b from-gradient-one to-gradient-two" -->
+<body class="bg-gradient-to-b from-gradient-one to-gradient-two"> 
+    {% include 'accounts/navbar.html' %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% include 'accounts/footer.html' %}
+</body>
+</html>
