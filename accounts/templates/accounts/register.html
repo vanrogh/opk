@@ -12,14 +12,17 @@
             {% csrf_token %}
             <div class="flex flex-col gap-4">
                 <!-- {{ form.as_p }} -->
-                <!-- <input type="text" name="username" placeholder="Имя" class="input text-sm"> -->
-                <input type="text" name="username" placeholder="Email" class="input text-sm" required>
+                <input type="text" name="username" placeholder="Username" class="input text-sm" required>
+                <input type="email" name="email" placeholder="Email" class="input text-sm" required>
+                <input type="text" name="first_name" placeholder="First Name" class="input text-sm" required>
+                <input type="text" name="last_name" placeholder="Last Name" class="input text-sm" required>
+                <!-- <input type="tel" name="phone" placeholder="Phone Number" class="input text-sm" required> -->
                 <input type="password" name="password1" placeholder="Password" class="input text-sm" required>
                 <input type="password" name="password2" placeholder="Confirm Password" class="input text-sm" required>
             </div>
             <button type="submit" class="text-white w-[256px] h-[30px] rounded-md mt-2">Sign Up</button>
             <!-- <input type="submit" name="Create user" value="Зарегистрироваться" class="text-white w-[256px] h-[30px] rounded-md mt-2 cursor-pointer"> -->
-            <p class="text-white text-center">Already have an account?? <a href="{% url 'login' %}" class="underline">Login</a></p>
+            <p class="text-white text-center">Already have an account? <a href="{% url 'login' %}" class="underline">Login</a></p>
         </form>
     </div>
     
