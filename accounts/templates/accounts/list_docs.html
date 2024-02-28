@@ -5,32 +5,36 @@
 {% block content %}
 
 <div class="p-8 flex flex-col items-center gap-10">
-    {% for doc in docs %}
-
-    <div class="max-w-sm rounded overflow-hidden shadow-2xl">
-        <img class="w-[354px] h-[472px]" src="{{ doc.upload_photo.url }}" alt="{{ doc.student }}">
-        <div class="px-6 py-4 text-white">
+  {% for doc in docs %}
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl">
+      <img class="w-[354px] h-[472px]" src="{{ doc.upload_photo.url }}" alt="{{ doc.student }}">
+      <div class="px-6 py-4 text-white">
           <div class="font-bold text-xl mb-2">{{ doc.student }}</div>
-          <!-- <p class="text-white-400 text-base">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-          </p> -->
-          <p><a href="{{ doc.document_passport.url }}" target="_blank">Passport</a></p>
-          <p><a href="{{ doc.school_documents.url }}" target="_blank">School/College documents</a></p>
-          <p><a href="{{ doc.upload_certificate.url }}" target="_blank">Certificate of no criminal record</a></p>
-          <!-- <p>Size (bytes): {{ doc.upload_photo.size }}</p>
-          <p>Width: {{ doc.upload_photo.width }}</p>
-          <p>Height: {{ doc.upload_photo.height }}</p> -->
-        </div>
-        <!-- <div class="px-6 pt-4 pb-2">
-          <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-          <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-          <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
-        </div> -->
+          <p>Status: 
+              <form action="{% url 'list_docs' %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="doc_id" value="{{ doc.id }}">
+                  <select name="status" class="text-black rounded-lg">
+                      <option value="Accepted" {% if doc.status == 'Accepted' %}selected{% endif %}>Accepted</option>
+                      <option value="Rejected" {% if doc.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                      <option value="Pending" {% if doc.status == 'Pending' %}selected{% endif %}>Pending</option>
+                  </select>
+                  <button type="submit" class="p-3 bg-slate-500 rounded-lg hover:bg-slate-400">Change Status</button>
+              </form>
+          </p>
+          <p><a href="mailto:{{ doc.student.email }}" class="hover:text-slate-400">{{ doc.student.email }}</a></p>
+          <p><a href="{{ doc.document_passport.url }}" class="hover:text-slate-400" target="_blank">Passport</a></p>
+          <p><a href="{{ doc.school_documents.url }}" class="hover:text-slate-400" target="_blank">School/College documents</a></p>
+          <p><a href="{{ doc.upload_certificate.url }}" class="hover:text-slate-400" target="_blank">Certificate of no criminal record</a></p>
+          <form action="{% url 'delete_student_docs' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="student_id" value="{{ doc.student.id }}">
+              <button type="submit" class="p-3 bg-red-500 rounded-lg mt-6">Delete Documents</button>
+          </form>
       </div>
-      {% endfor %}
+  </div>
+  {% endfor %}
 </div>
-
-
 
 
 {% endblock %}

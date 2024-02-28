@@ -28,9 +28,23 @@ def home(request):
 
 @user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def list_docs(request):
+    if request.method == 'POST':
+        doc_id = request.POST.get('doc_id')
+        status = request.POST.get('status')
+        if doc_id and status:
+            document = Document.objects.get(pk=doc_id)
+            document.status = status
+            document.save()
     docs = Document.objects.all()
     context = {'docs': docs}
     return render(request, 'accounts/list_docs.html', context)
+
+def delete_student_docs(request):
+    if request.method == 'POST':
+        student_id = request.POST.get('student_id')
+        if student_id:
+            Document.objects.filter(student_id=student_id).delete()
+    return redirect('list_docs')
 
 def user_register(request):
     if request.method == 'POST':
@@ -72,6 +86,7 @@ def create_or_update_student_profile(sender, instance, created, **kwargs):
     elif hasattr(instance, 'studentprofile'):
         instance.studentprofile.first_name = instance.first_name
         instance.studentprofile.last_name = instance.last_name
+        instance.studentprofile.email = instance.email
         instance.studentprofile.save()
 
 
