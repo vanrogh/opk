@@ -6,9 +6,9 @@
 
 
 <!-- {% if request.user.is_authenticated %} -->
-    <section class="w-full flex flex-col items-center min-h-screen gap-10 max-container mt-4 ">
+    <section class="w-full flex flex-col items-center min-h-screen gap-6 max-container mt-4 ">
         <h1 class="text-3xl text-white">Welcome, {{ request.user.username }}</h1>
-        <!-- <h2 class="text-2xl text-white">Welcome, {{ request.user.username }}</h2> -->
+        {% if not documents_submitted %}
         <h2 class="text-2xl text-white">Submit documents online <br>
             List of documents for admission
         </h2>
@@ -25,20 +25,26 @@
 
         <div class="flex items-center justify-center gap-20 flex-col my-8 ">
             <div class="flex flex-col gap-4">
-                <h3 class="text-white text-center">Upload PDF or JPG/PNG</h3>
+                <h3 class="text-white text-center text-2xl">Upload PDF or JPG/PNG</h3>
                 <label for="document_passport" class="text-white text-lg">Passport Scan</label>
-                <input type="file" name="document_passport" id="document_passport" class="text-white mb-2 text-sm font-medium" accept=".png,.jpg,.pdf" required />
+                <input type="file" name="document_passport" id="document_passport" class="w-full text-lg border border-gray-300 rounded-lg cursor-pointer bg-gray-50 text-white focus:outline-none dark:bg-slate-600 dark:border-gray-600 dark:placeholder-gray-400" accept=".png,.jpg,.pdf" required />
                 <label for="upload_photo" class="text-white text-lg">Upload 3x4 photo</label>
-                <input type="file" name="upload_photo" id="upload_photo" class="text-white mb-2 text-sm font-medium" accept=".png,.jpg" required />
+                <input type="file" name="upload_photo" id="upload_photo" class="w-full text-lg border border-gray-300 rounded-lg cursor-pointer bg-gray-50 text-white focus:outline-none dark:bg-slate-600 dark:border-gray-600 dark:placeholder-gray-400" accept=".png,.jpg" required />
+                <p class="text-sm text-gray-500 dark:text-gray-300">PNG or JPG  (MAX. 300x400px).</p>
                 <label for="upload_certificate" class="text-white text-lg">Certificate of no criminal record</label>
-                <input type="file" name="upload_certificate" id="upload_certificate" class="text-white mb-2 text-sm font-medium" accept=".png,.jpg,.pdf" required />
+                <input type="file" name="upload_certificate" id="upload_certificate" class="w-full text-lg border border-gray-300 rounded-lg cursor-pointer bg-gray-50 text-white focus:outline-none dark:bg-slate-600 dark:border-gray-600 dark:placeholder-gray-400" accept=".png,.jpg,.pdf" required />
                 <label for="school_documents" class="text-white text-lg">Original documents from school / college</label>
-                <input type="file" name="school_documents" id="school_documents" class="text-white mb-2 text-sm font-medium" accept=".png,.jpg,.pdf" required />
+                <input type="file" name="school_documents" id="school_documents" class="w-full text-lg border border-gray-300 rounded-lg cursor-pointer bg-gray-50 text-white focus:outline-none dark:bg-slate-600 dark:border-gray-600 dark:placeholder-gray-400" accept=".png,.jpg,.pdf" required />
                 <button type="submit" class="self-center text-white w-[256px] h-[30px] rounded-md mt-2 bg-slate-600 hover:bg-slate-500">Save</button>
             </div>
-            <div class="text-white-400 text-lg p-2 ">{{ form.errors }}</div>
+            <div class="text-red-400 text-lg p-2 ">{{ form.errors }}</div>
         </div>
-    </form>
+        </form>
+    {% else %}
+        <p class="text-white text-lg mx-4">You've already sent the documents. Please wait for approval.</p>
+        <p class="text-white text-3xl mb-6">Status: {{ status }}</p>
+        {% include 'accounts/conditions.html' %}
+    {% endif %}
     <!-- {% else %}
     {% include 'accounts/conditions.html' %}
     <div class="h-[600px] flex justify-center items-center gap-40 text-4xl">

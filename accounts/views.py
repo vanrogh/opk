@@ -13,18 +13,36 @@ from django.contrib.auth.decorators import user_passes_test
 # Create your views here.
 @login_required(login_url='/login')
 def home(request):
+    if request.user.is_staff or request.user.is_superuser:
+        # Redirect staff and superusers to a different page
+        return redirect('list_docs')
+
+    try:
+        student = request.user.studentprofile
+        documents_submitted = Document.objects.filter(student=student).exists()
+        status = Document.objects.filter(student=student).values_list('status', flat=True).first()
+    except StudentProfile.DoesNotExist:
+        # Handle the case where the user is not a student
+        student = None
+        documents_submitted = False
+        status = None
+
     if request.method == 'POST':
         form = DocumentUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            document = form.save(commit=False)
-            document.student = request.user.studentprofile
-            document.save()
-            messages.success(request, "You've successfully sent your documents! Wait for the approval.")
-            return redirect('home')
-        
+            if student:
+                document = form.save(commit=False)
+                document.student = student
+                document.save()
+                messages.success(request, "You've successfully sent your documents! Wait for the approval.")
+                return redirect('home')
+            else:
+                messages.error(request, "You don't have permission to submit documents.")
     else:
         form = DocumentUploadForm()
-    return render(request, 'accounts/dashboard.html', {'form': form})
+
+    return render(request, 'accounts/dashboard.html', {'form': form, 'documents_submitted': documents_submitted, 'status': status})
+
 
 @user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def list_docs(request):
